@@ -28,10 +28,9 @@ env_dir = ARGV[2]
 log_main "Found a valid resolutionizer application"
 
 log_main "Downloading and installing the latest version of node and npm"
-node_url="http://s3pository.heroku.com/node/v$node_version/node-v$node_version-linux-x64.tar.gz"
+node_url="http://s3pository.heroku.com/node/v$node_version/node-v0.10.33-linux-x64.tar.gz"
 if run_command("curl #{node_url} -s -o - | tar xzf - -C #{build_dir}") != 0 
 	log_main"Error occured installing node and npm"
-end
 
 log_main "Obtaining client dependencies"
 Dir.chdir File.join(build_dir, "resolutionizer")
