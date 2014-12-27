@@ -31,6 +31,18 @@ log_main "Obtaining client dependencies"
 Dir.chdir File.join(build_dir, "resolutionizer")
 log_detail "Entering directory #{Dir.pwd}"
 
+log_detail "Using node version"
+if run_command('node', '--version') != 0
+	log_main "Error checking node verison"
+	exit 1
+end
+
+log_detail "Using npm version"
+if run_command('npm', '--version') != 0
+	log_main "Error checking npm version"
+	exit 1
+end
+
 log_detail "Installing grunt-cli"
 if run_command('npm', 'install', '-g', 'grunt-cli@0.1.13') != 0
 	if run_command('grunt', '--version') != 0
@@ -44,3 +56,5 @@ if run_command('npm install') != 0
 	log_main "Error occured installing node-modules"
 	exit 1
 end
+
+exit 0
