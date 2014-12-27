@@ -68,6 +68,7 @@ if run_command('npm', 'install', '-g', 'grunt-cli@0.1.13') != 0
 	end
 end
 
+FileUtils.rm_rf File.join("/app", ".npm")
 log_main "Installing node-modules"
 if run_command('npm install') != 0
 	log_main "Error occured installing node-modules"
