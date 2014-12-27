@@ -36,15 +36,14 @@ if run_command("curl #{node_url} -s -o - | tar xzf - -C #{build_dir}") != 0
 	exit 1
 end
 
-Dir.glob(File.join(build_dir, "*")).each do |f|
-	log_detail f
-end
 FileUtils.mkdir_p File.join(build_dir, "vendor", "node")
 FileUtils.mv File.join(build_dir, "node-v#{node_version}-linux-x64"), File.join(build_dir, "vendor", "node")
 Dir.glob(File.join(build_dir, "vendor", "node", "bin", "*")).each do |f|
 	log_detail f
 	FileUtils.chmod "+x", f
 end
+
+ENV["PATH"] = File.join(build_dir, "vendor", "node", "bin") + File.PATH_SEPARATOR + ENV['PATH']
 
 log_main "Obtaining client dependencies"
 Dir.chdir File.join(build_dir, "resolutionizer")
