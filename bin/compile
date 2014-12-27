@@ -36,6 +36,7 @@ if run_command("curl #{node_url} -s -o - | tar xzf - -C #{build_dir}") != 0
 	exit 1
 end
 
+run_command("ls #{build_dir}")
 FileUtils.mkdir_p "#{build_dir}\vendor"
 FileUtils.mv File.join(build_dir, "node-v#{node_version}-linux-x64"), File.join(build_dir, "vendor", "node")
 Dir.glob(File.join(build_dir, "vendor", "node", "bin", "*")).each do |f|
