@@ -28,10 +28,18 @@ env_dir = ARGV[2]
 log_main "Found a valid resolutionizer application"
 
 log_main "Downloading and installing the latest version of node and npm"
-node_url="http://s3pository.heroku.com/node/v0.10.33/node-v0.10.33-linux-x64.tar.gz"
+node_version = "0.10.33"
+node_url="http://s3pository.heroku.com/node/v#{node_version}/node-v#{node_version}-linux-x64.tar.gz"
 if run_command("curl #{node_url} -s -o - | tar xzf - -C #{build_dir}") != 0 
 	log_main"Error occured installing node and npm"
 	exit 1
+end
+
+FileUtils.mkdir_p "#{build_dir}\vendor"
+FileUtils.mv File.join(build_dir, "node-v#{node_version}-linux-x64"), File.join(build_dir, "vendor", "node")
+Dir.glob(File.join(build_dir, "vendor", "node", "bin", "*")).each do |f|
+	log_detail f
+	FileUtils.chmod "+x", f
 end
 
 log_main "Obtaining client dependencies"
