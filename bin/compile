@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'open3'
-require 'fileutls'
+require 'fileutils'
 
 ARROW  = "----->"
 INDENT = "      "
