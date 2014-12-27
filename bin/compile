@@ -39,7 +39,7 @@ end
 FileUtils.mkdir_p File.join(build_dir, "vendor", "node")
 FileUtils.mv Dir.glob(File.join(build_dir, "node-v#{node_version}-linux-x64", "*")), File.join(build_dir, "vendor", "node")
 Dir.glob(File.join(build_dir, "vendor", "node", "bin", "*")).each do |f|
-	FileUtils.chmod "+x", f
+	FileUtils.chmod "a+x", f
 end
 
 ENV["PATH"] = File.join(build_dir, "vendor", "node", "bin") + File::PATH_SEPARATOR + ENV['PATH']
