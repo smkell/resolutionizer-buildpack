@@ -43,7 +43,7 @@ Dir.glob(File.join(build_dir, "vendor", "node", "bin", "*")).each do |f|
 	FileUtils.chmod "+x", f
 end
 
-ENV["PATH"] = File.join(build_dir, "vendor", "node", "bin") + File.PATH_SEPARATOR + ENV['PATH']
+ENV["PATH"] = File.join(build_dir, "vendor", "node", "bin") + File::PATH_SEPARATOR + ENV['PATH']
 
 log_main "Obtaining client dependencies"
 Dir.chdir File.join(build_dir, "resolutionizer")
