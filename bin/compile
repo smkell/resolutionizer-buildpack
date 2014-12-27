@@ -50,6 +50,12 @@ if run_command('node', '--version') != 0
 	exit 1
 end
 
+log_detail "Updating npm to latest"
+if run_command('npm install -g npm') != 0
+	log_main "Error updating npm"
+	exit 1
+end
+
 log_detail "Using npm version"
 if run_command('npm', '--version') != 0
 	log_main "Error checking npm version"
