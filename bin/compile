@@ -26,23 +26,6 @@ cache_dir = ARGV[1]
 env_dir = ARGV[2]
 
 log_main "Found a valid resolutionizer application"
-log_main "Initializing submodules"
-
-cur_dir = Dir.pwd
-Dir.chdir build_dir
-
-if run_command('git', 'submodule', 'init') != 0
-	log_main "Error occured initializing submodules"
-	exit 1
-end
-
-log_main "Updating submodules"
-
-if run_command('git', 'submodule', 'update') != 0
-	log_main "Error occured while updating submodules"
-	exit 1
-end
-Dir.chdir cur_dir
 
 log_main "Obtaining client dependencies"
 Dir.chdir File.join(build_dir, "resolutionizer")
