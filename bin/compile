@@ -38,8 +38,8 @@ end
 
 FileUtils.mkdir_p File.join(build_dir, "vendor", "node")
 FileUtils.mv Dir.glob(File.join(build_dir, "node-v#{node_version}-linux-x64", "*")), File.join(build_dir, "vendor", "node")
-Dir.glob(File.join(build_dir, "vendor", "node", "bin", "*")).each do |f|
-	FileUtils.chmod 0777, f
+Dir.glob(File.join(build_dir, "vendor", "node", "bin", "*")).each do |f|	
+	FileUtils.chmod(0777, f, :verbose => true)
 end
 
 ENV["PATH"] = File.join(build_dir, "vendor", "node", "bin") + File::PATH_SEPARATOR + ENV['PATH']
