@@ -124,8 +124,8 @@ ENV['GOPATH'] = gopath
 log_detail "Setting GOPATH to #{gopath}"
 
 FileUtils.mkdir_p File.join(gopath, 'src')
-FileUtils.cp_r File.join(build_dir, 'resolutionizerd'), File.join(gopath, 'src', ENV['name'])
-Dir.glob(File.join(gopath, 'src', ENV['name'], "*")).each do |f|
+FileUtils.cp_r File.join(build_dir, 'resolutionizerd'), File.join(gopath, 'src', 'resolutionizerd')
+Dir.glob(File.join(gopath, 'src', 'resolutionizerd', "*")).each do |f|
 	log_detail f
 end
 
