@@ -137,8 +137,6 @@ end
 
 FileUtils.mkdir_p File.join(build_dir, 'bin')
 FileUtils.cp File.join(gopath, 'bin', 'resolutionizerd'), File.join(build_dir, 'bin', 'resolutionizerd')
-Dir.glob(File.join(build_dir, 'bin', '*')).each do |f|
-	log_detail f
-end
+ENV['CLIENT']  = File.join(build_dir, 'resolutionizer', 'dist')
 
 exit 0
