@@ -137,6 +137,11 @@ end
 
 FileUtils.mkdir_p File.join(build_dir, 'bin')
 FileUtils.cp File.join(gopath, 'bin', 'resolutionizerd'), File.join(build_dir, 'bin', 'resolutionizerd')
-ENV['CLIENT']  = File.join(build_dir, 'resolutionizer', 'dist')
+
+FileUtils.mkdir_p File.join(build_dir, '.profile.d')
+File.open(File.join(build_dir, '.profile.d', 'app.sh'), 'w') do |f|
+	f.write "PATH=$PATH:$HOME/bin\n"
+	f.write "CLIENT=$HOME/resolutionizer/dist"
+end
 
 exit 0
