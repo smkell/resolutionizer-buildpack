@@ -2,11 +2,16 @@
 require 'open3'
 require 'fileutils'
 
-ARROW  = "----->"
-INDENT = "      "
+ARROW    = "----->"
+MIN_AROW = "  --->"
+INDENT   = "      "
 
 def log_main(s)
 	$stdout.puts ARROW + " " + s
+end
+
+def log_minor(s)
+	$stdout.puts MIN_AROW + " " + s
 end
 
 def log_detail(s)
@@ -44,19 +49,19 @@ end
 
 ENV["PATH"] = File.join(build_dir, "vendor", "node", "bin") + File::PATH_SEPARATOR + ENV['PATH']
 
-log_detail "Using node version"
+log_minor "Using node version"
 if run_command('node', '--version') != 0
 	log_main "Error checking node version"
 	exit 1
 end
 
-log_detail "Updating npm to latest"
+log_minor "Updating npm to latest"
 if run_command('npm install -g npm') != 0
 	log_main "Error updating npm"
 	exit 1
 end
 
-log_detail "Using npm version"
+log_minor "Using npm version"
 if run_command('npm', '--version') != 0
 	log_main "Error checking npm version"
 	exit 1
@@ -66,7 +71,7 @@ log_main "Obtaining client dependencies"
 Dir.chdir File.join(build_dir, "resolutionizer")
 log_detail "Entering directory #{Dir.pwd}"
 
-log_detail "Installing grunt-cli"
+log_minor "Installing grunt-cli"
 if run_command('npm', 'install', '-g', 'grunt-cli@0.1.13') != 0
 	if run_command('grunt', '--version') != 0
 		log_main "Error occured installing grunt-cli"
@@ -74,28 +79,38 @@ if run_command('npm', 'install', '-g', 'grunt-cli@0.1.13') != 0
 	end
 end
 
-log_detail "Installing bower"
+log_minor "Installing bower"
 if run_command("npm", "install", "-g", "bower@1.3.12") != 0
 	log_main "Error occured installing bower"
 	exit 1
 end
 
-FileUtils.rm_rf File.join("/app", ".npm")
-log_main "Installing node-modules"
-if run_command('npm install') != 0
+log_minor "Installing node-modules"
+if run_command('npm', 'install') != 0
 	log_main "Error occured installing node-modules"
 	exit 1
 end
 
-log_main "Installing bower components"
+log_minor "Installing bower components"
 if run_command('bower', 'install') != 0
 	log_main "Error occured installing bower components"
 	exit 1
 end
 
-log_main "Running grunt tasks"
+log_main "Building client"
+log_minor "Running grunt tasks"
 if run_command('grunt') != 0 
 	log_main "Error occured building site"
+	exit 1
+end
+
+FileUtils.chdir File.join(build_dir, "resolutionizerd")
+log_main "Downloading and installing Go"
+log_detail "Entering directory #{Dir.pwd}"
+
+go_url="https://storage.googleapis.com/golang/go1.4.linux-amd64.tar.gz"
+if run_command("curl #{go_url} -s -o - | tar xzf - -C #{build_dir}/vendor") != 0 
+	log_main"Error occured installing Go"
 	exit 1
 end
 
