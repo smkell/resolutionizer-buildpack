@@ -125,8 +125,14 @@ log_detail "Setting GOPATH to #{gopath}"
 
 FileUtils.mkdir_p File.join(gopath, 'src')
 FileUtils.cp_r File.join(build_dir, 'resolutionizerd'), File.join(gopath, 'src', 'resolutionizerd')
-Dir.glob(File.join(gopath, 'src', 'resolutionizerd', "*")).each do |f|
-	log_detail f
+
+FileUtils.chdir File.join(gopath, 'src', 'resolutionizerd')
+log_main "Building server"
+log_detail "Entering GOPATH directory #{Dir.pwd}"
+
+if run_command('go', 'get', '-tags heroku') != 0
+	log_main "Error building server"
+	exit 1
 end
 
 exit 1
