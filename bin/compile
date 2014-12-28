@@ -114,4 +114,17 @@ if run_command("curl #{go_url} -s -o - | tar xzf - -C #{build_dir}/vendor") != 0
 	exit 1
 end
 
-exit 0
+ENV['GOROOT'] = File.join build_dir, 'vendor', 'go'
+log_detail "Setting GOROOT to #{ENV['GOROOT']}"
+
+ENV['PATH'] = File.join(ENV['GOROOT'], 'bin') + File.PATH_SEPARATOR + ENV['PATH']
+
+gopath = File.join build_dir, '.heroku', 'g'
+ENV['GOPATH'] = gopath
+FileUtils.mkdir_p File.join(gopath, 'src')
+FileUtils.cp_r File.join(build_dir, 'resolutionizerd'), File.join(gopath, 'src', ENV['name'])
+Dir.glob(File.join(gopath, 'src', ENV['name'])).each do |f|
+	log_detail f
+end
+
+exit 1
