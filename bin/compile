@@ -130,7 +130,7 @@ FileUtils.chdir File.join(gopath, 'src', 'resolutionizerd')
 log_main "Building server"
 log_detail "Entering GOPATH directory #{Dir.pwd}"
 
-if run_command('go', 'get', '-tags heroku') != 0
+if run_command('go', 'get', '-tags', 'heroku') != 0
 	log_main "Error building server"
 	exit 1
 end
