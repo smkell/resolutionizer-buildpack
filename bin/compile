@@ -117,7 +117,7 @@ end
 ENV['GOROOT'] = File.join build_dir, 'vendor', 'go'
 log_detail "Setting GOROOT to #{ENV['GOROOT']}"
 
-ENV['PATH'] = File.join(ENV['GOROOT'], 'bin') + File.PATH_SEPARATOR + ENV['PATH']
+ENV['PATH'] = File.join(ENV['GOROOT'], 'bin') + File::PATH_SEPARATOR + ENV['PATH']
 
 gopath = File.join build_dir, '.heroku', 'g'
 ENV['GOPATH'] = gopath
