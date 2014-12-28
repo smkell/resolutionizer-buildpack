@@ -136,9 +136,9 @@ if run_command('go', 'get', '-tags', 'heroku', '-v') != 0
 end
 
 FileUtils.mkdir_p File.join(build_dir, 'bin')
-FileUtils.cp_r File.join(gopath, 'bin'), File.join(build_dir, 'bin')
+FileUtils.cp File.join(gopath, 'bin', 'resolutionizerd'), File.join(build_dir, 'bin', 'resolutionizerd')
 Dir.glob(File.join(build_dir, 'bin', '*')).each do |f|
 	log_detail f
 end
 
-exit 1
+exit 0
