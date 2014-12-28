@@ -121,6 +121,8 @@ ENV['PATH'] = File.join(ENV['GOROOT'], 'bin') + File::PATH_SEPARATOR + ENV['PATH
 
 gopath = File.join build_dir, '.heroku', 'g'
 ENV['GOPATH'] = gopath
+log_detail "Setting GOPATH to #{gopath}"
+
 FileUtils.mkdir_p File.join(gopath, 'src')
 FileUtils.cp_r File.join(build_dir, 'resolutionizerd'), File.join(gopath, 'src', ENV['name'])
 Dir.glob(File.join(gopath, 'src', ENV['name'])).each do |f|
