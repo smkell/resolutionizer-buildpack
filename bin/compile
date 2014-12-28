@@ -130,9 +130,15 @@ FileUtils.chdir File.join(gopath, 'src', 'resolutionizerd')
 log_main "Building server"
 log_detail "Entering GOPATH directory #{Dir.pwd}"
 
-if run_command('go', 'get', '-tags', 'heroku') != 0
+if run_command('go', 'get', '-tags', 'heroku', '-v') != 0
 	log_main "Error building server"
 	exit 1
+end
+
+FileUtils.mkdir_p File.join(build_dir, 'bin')
+FileUtils.cp_r File.join(gopath, 'bin'), File.join(build_dir, 'bin')
+Dir.glob(File.join(build_dir, 'bin', '*')).each do |f|
+	log_detail f
 end
 
 exit 1
